@@ -1,0 +1,144 @@
+{% extends 'account/main.html' %} <!-- dashboar extenduje main-->
+{% load crispy_forms_tags %}
+{% block content %}
+    
+    <br>
+<div class="container">
+<div class="row">
+       <div class="col-md">
+        <div class="card card-body">
+            <h5>Contact Information:</h5>
+            <hr>
+            {% if request.user.get_full_name == '' %}
+            <b><p>First or last name is not populated</p></b>
+            {%else%}
+            <p>{{user.get_full_name}}</p>
+            {% endif %}
+            <p>username: {{ user.get_username }} </p>
+            <p>email: {{ user.email }} </p>
+
+            <a class="btn btn-sm btn-info" href="{% url 'edit_profile' %}">Update info</a>
+        </div>
+    </div>
+
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Number of bills :</h5>
+            <hr>
+            {% if count_bills is None %}
+            <h1 style="text-align: center;padding:10px">0</h1>
+            {%else%}
+            <h1 style="text-align: center;padding:10px">{{count_bills}}</h1>
+            {%endif%}
+        </div>
+    </div>
+
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Total :</h5>
+            <hr>
+            {% if sum_bills.total_sum is None %}
+            <h1 style="text-align: center;padding:10px">0<small> rsd</small></h1>
+            
+            {%else%}
+            <h1 style="text-align: center;padding:10px">{{sum_bills.total_sum}}<small> rsd</small></h1>
+            
+            {%endif%}
+            
+        </div>
+    </div>
+
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <form method="get">
+                 <!--Prosledjujemo iz views.py filter-->
+                 
+
+                 {{myFilter.form.start_date.label}}
+                 {{myFilter.form.start_date}}
+
+                 {{myFilter.form.end_date.label}}
+                 {{myFilter.form.end_date}}
+                 <br><br>
+                 {{myFilter.form.category.label}}
+                 {{myFilter.form.category}}
+                
+                 {{myFilter.form.price.label}}
+                 {{myFilter.form.price}}
+
+                 {{myFilter.form.description.label}}
+                 {{myFilter.form.description}}
+
+
+                <button class="btn btn-primary" type="submit">Search</button>
+                <a href="{% url 'profile' %}" class="btn btn-info">Refresh</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <table class="table table-sm ">
+                <tr>
+                    <th>Payment date</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+                {% for bill in page_obj %}
+                <tr>
+                    <td>
+                        {{bill.payment_date}}
+                    </td>
+                    <td>
+                        {{bill.description}}
+                    </td>
+                   
+                    <td>
+                        {{bill.price}}
+                    </td>
+                    <td>
+                        {{bill.category}}
+                    </td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'update_bill' bill.id%}">Update</a>
+                        <a class="btn btn-sm btn-danger" href="{% url 'delete_bill' bill.id%}">Remove</a></td>
+                </tr>
+                
+                {%endfor%}
+            </table>
+
+            <nav aria-label="Page navigation example">
+               
+                <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">First</a></li>  
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+                {% endif %}
+                  
+                </ul>
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+            </nav>
+
+        </div>
+    </div>
+</div>
+</div>
+<br>
+{% endblock %}

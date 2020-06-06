@@ -1,0 +1,17 @@
+
+body{
+    background-color: #ebeff5;
+}
+#this-year{
+    background-color: #000000;
+}
+#this-month{
+    background-color: #000000;
+}
+#total-bills{
+    background-color: #000000;
+}
+
+.form-control-inline {
+    width: auto;
+  }

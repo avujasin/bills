@@ -1,0 +1,36 @@
+{% load static %}
+
+<style>
+  .hello-msg{
+    font-size: 16px;
+    color: whitesmoke;
+    margin-right: 20px;
+    text-decoration: none;
+  }
+</style>
+<div class="container">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        
+        <a class="nav-item nav-link active" href="{% url 'home' %}">Dashboard </a>
+        <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+        <a class="nav-item nav-link" href="{% url 'create_bill' %}">Add bills</a>
+      </div>
+    </div>
+
+    {% if request.user.get_full_name == '' %}
+    <span class="hello-msg">Hello, {{ user.get_username}} </span>
+    {% else %}
+    <span class="hello-msg">Hello, {{user.get_full_name}} </span>
+    {% endif %}
+  
+  <span><a class="btn btn-lg btn-dark" href="{% url 'logout' %}">Logout</a></span>
+
+</nav> 
+
+</div>

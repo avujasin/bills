@@ -1,0 +1,27 @@
+{% extends 'account/main.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="card card-body">
+    <div class="row justify-content-center">
+      <div class="col-6">
+       <form action="" method="POST">
+        {% csrf_token %} 
+        {%for field in form%}
+        <label>{{field.label_tag}}</label>
+        {{field}}
+        <hr>
+        {%endfor%}
+        <br>
+        <div   aria-label="Basic example">
+          <a href="{% url 'home' %}" class="btn btn-secondary">Go back</a>
+          <button type="submit" name="submit" class="btn btn-info">Submit</button>
+      </div>
+       </form>
+       </div>
+    </div>
+</div>
+  </div>
+
+{% endblock %}
