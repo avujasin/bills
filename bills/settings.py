@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@v8xt8hrl)9sr%36mphn0)g&v(50%mqale2(gjx7bx_0kt3$1o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -125,13 +125,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') #for nginx production, after changing --> python manage.py collectstatic
+
 
 MEDIA_URL = '/images/'
 
 #dodali smo static folder, join sa BASE_DIR line16
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static')
-]
+#STATICFILES_DIRS = [
+#    os.path.join(BASE_DIR,'static')
+#]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
